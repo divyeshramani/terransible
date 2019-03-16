@@ -7,7 +7,8 @@ data "aws_availability_zones" "available" {}
 
 #### VPC 
 resource "aws_vpc" "vpc_ans" {
-  cidr_block = "${var.cidr}"
+  cidr_block           = "${var.cidr}"
+  enable_dns_hostnames = true
 }
 
 #### Internet Gateway
@@ -95,7 +96,7 @@ resource "aws_key_pair" "auth" {
 
 ###### Ansible PlayGround Nodes
 resource "aws_instance" "dev1" {
-  count                  = 2
+  count                  = 3
   subnet_id              = "${aws_subnet.public1_ans.id}"
   instance_type          = "${var.instance_type}"
   ami                    = "${var.ami_id_ansible}"
@@ -107,7 +108,7 @@ resource "aws_instance" "dev1" {
   }
 
   provisioner "local-exec" {
-    command = "echo ${self.public_ip} >> aws_hosts"
+    command = "echo ${self.public_ip} >> playbooks/hosts_dev"
   }
 
   #
@@ -117,7 +118,8 @@ resource "aws_instance" "dev1" {
   #
 }
 
-###### Chef Work Station Node 
+/*
+###### Chef Work Station Node
 data "template_file" "init" {
   template = "${file("chef_ws_init.tpl")}"
 }
@@ -139,7 +141,7 @@ resource "aws_instance" "chef_ws" {
   }
   # provisioner "local-exec" {
   #   command = "sudo su - && cd /tmp && curl -O https://packages.chef.io/files/stable/chefdk/2.5.3/el/7/chefdk-2.5.3-1.el7.x86_64.rpm && rpm -Uvh chefdk-2.5.3-1.el7.x86_64.rpm"
-  # }
-
-  
+  # }  
 }
+*/
+

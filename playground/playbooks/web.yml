@@ -1,5 +1,5 @@
 ---  # Bootstrap Webservers
-- hosts: dev
+- hosts: web
   become: yes
   tasks:
   - name: install httpd
