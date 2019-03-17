@@ -17,3 +17,7 @@ variable "instance_type" {}
 variable "ami_id_ansible" {}
 
 variable "ami_id_chef" {}
+
+variable "ami_rhel" {}
+
+variable "ami_ubuntu" {}

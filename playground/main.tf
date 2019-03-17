@@ -96,10 +96,10 @@ resource "aws_key_pair" "auth" {
 
 ###### Ansible PlayGround Nodes
 resource "aws_instance" "dev1" {
-  count                  = 3
+  count                  = 2
   subnet_id              = "${aws_subnet.public1_ans.id}"
   instance_type          = "${var.instance_type}"
-  ami                    = "${var.ami_id_ansible}"
+  ami                    = "${var.ami_rhel}"
   vpc_security_group_ids = ["${aws_security_group.sg_public_ans.id}"]
   key_name               = "${aws_key_pair.auth.id}"
 
@@ -108,7 +108,7 @@ resource "aws_instance" "dev1" {
   }
 
   provisioner "local-exec" {
-    command = "echo ${self.public_ip} >> playbooks/hosts_dev"
+    command = "echo ${self.public_dns} >> playbooks/hosts_rhel"
   }
 
   #
@@ -116,6 +116,23 @@ resource "aws_instance" "dev1" {
   #  command = "aws ec2 wait instance-status-ok --instance-ids ${aws_instance.dev.id} && ansible-playbook -i aws_hosts wordpress.yml"
   #}
   #
+}
+
+resource "aws_instance" "ubuntu" {
+  count                  = 2
+  subnet_id              = "${aws_subnet.public1_ans.id}"
+  instance_type          = "${var.instance_type}"
+  ami                    = "${var.ami_ubuntu}"
+  vpc_security_group_ids = ["${aws_security_group.sg_public_ans.id}"]
+  key_name               = "${aws_key_pair.auth.id}"
+
+  tags {
+    Name = "ubuntu-${count.index}"
+  }
+
+  provisioner "local-exec" {
+    command = "echo ${self.public_dns} >> playbooks/hosts_ubuntu "
+  }
 }
 
 /*
