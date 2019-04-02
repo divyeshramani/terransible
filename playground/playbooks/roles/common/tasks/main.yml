@@ -1,0 +1,4 @@
+- name: Capture Python Version
+  command: python --version
+  register: pythonversion
+- debug: msg="Python Version= {{ pythonversion.stdout }} {{ pythonversion.stderr }}"

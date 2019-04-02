@@ -1,0 +1,13 @@
+--- # LOOP Playbook Example
+- hosts: all
+  user: ec2-user
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Add a list of users
+      user: name={{ item }} state=present
+      with_items:
+        - devang
+        - amit
+        - jinay
+        - divyesh

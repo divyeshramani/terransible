@@ -1,0 +1,19 @@
+--- # DEMO OF USING ROLES IN PLAYBOOK
+- hosts: all
+  become: yes
+  gather_facts: no
+  connection: ssh
+  pre_tasks:
+  - name: Capture Start Time
+    command: date +"%m-%d-%Y %T"
+    register: start_time
+  roles:
+   - common
+   
+  post_tasks:
+  - name: Capture End Time
+    command: date +"%m-%d-%Y %T"
+    register: end_time
+  - debug: msg="Show Start Time= {{ start_time.stdout }}" 
+  - debug: msg="Show End TIme= {{ end_time.stdout }}"
+      

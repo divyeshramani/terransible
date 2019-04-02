@@ -1,0 +1,19 @@
+--- # Testing Tableau Installation
+- hosts: all
+  become: yes
+  gather_facts: yes
+  connection: ssh
+  pre_tasks:
+  - name: Capture Start Time
+    command: date +"%m-%d-%Y %T"
+    register: start_time
+  roles:
+   - pdp_tableau
+   
+  post_tasks:
+  - name: Capture End Time
+    command: date +"%m-%d-%Y %T"
+    register: end_time
+  - debug: msg="Start Time= {{ start_time.stdout }}" 
+  - debug: msg="End TIme= {{ end_time.stdout }}"
+      

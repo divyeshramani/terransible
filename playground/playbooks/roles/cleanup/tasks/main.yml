@@ -1,0 +1,22 @@
+- name: Stop Apache on RedHat
+  service: name=httpd state=stopped
+  when: ansible_os_family == "RedHat"
+  ignore_errors: yes
+- name: Stop Apache on Ubuntu
+  service: name=apache2 state=stopped
+  when: ansible_os_family == "Debian"
+  ignore_errors: yes
+- name: Cleanup Packages that we play with in RedHat
+  yum: pkg={{ item }} state=absent
+  with_items:
+  - httpd 
+  - lynx
+  - telnet
+  when: ansible_os_family == "RedHat"
+- name: Clean Packages in Ubuntu
+  apt: pkg={{ item }} state=absent
+  with_items:
+  - apache2 
+  - lynx
+  - telnet
+  when: ansible_os_family == "Debian"

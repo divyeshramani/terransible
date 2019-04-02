@@ -118,22 +118,22 @@ resource "aws_instance" "dev1" {
   #
 }
 
-resource "aws_instance" "ubuntu" {
-  count                  = 2
-  subnet_id              = "${aws_subnet.public1_ans.id}"
-  instance_type          = "${var.instance_type}"
-  ami                    = "${var.ami_ubuntu}"
-  vpc_security_group_ids = ["${aws_security_group.sg_public_ans.id}"]
-  key_name               = "${aws_key_pair.auth.id}"
+# resource "aws_instance" "ubuntu" {
+#   count                  = 2
+#   subnet_id              = "${aws_subnet.public1_ans.id}"
+#   instance_type          = "${var.instance_type}"
+#   ami                    = "${var.ami_ubuntu}"
+#   vpc_security_group_ids = ["${aws_security_group.sg_public_ans.id}"]
+#   key_name               = "${aws_key_pair.auth.id}"
 
-  tags {
-    Name = "ubuntu-${count.index}"
-  }
+#   tags {
+#     Name = "ubuntu-${count.index}"
+#   }
 
-  provisioner "local-exec" {
-    command = "echo ${self.public_dns} >> playbooks/hosts_ubuntu "
-  }
-}
+#   provisioner "local-exec" {
+#     command = "echo ${self.public_dns} >> playbooks/hosts_ubuntu "
+#   }
+# }
 
 /*
 ###### Chef Work Station Node

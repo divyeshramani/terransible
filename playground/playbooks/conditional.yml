@@ -1,0 +1,15 @@
+--- # Ansible Playbook to Show How to Use Conditions
+- hosts: web
+  become: yes
+  vars:
+    playbook_type: conditionalexample
+  vars_files:
+    - conf/webdefaults.yml
+    - conf/copyright.yml
+  tasks:
+    - name: Install Apache to Host appropriate to Distrubution type (Ubuntu/Debian)
+      command: apt-get -y install apache2
+      when: ansible_os_family == "Debian"
+    - name: Install Apache to Host appropriate to Distrubution type (CentOs/RedHat)
+      command: yum -y install httpd
+      when: ansible_os_family == "RedHat"

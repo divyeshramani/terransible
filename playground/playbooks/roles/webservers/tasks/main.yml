@@ -1,0 +1,6 @@
+- name: Install Apache Web Server for RedHat
+  yum: pkg={{ apache_redhat }} state=absent
+  when: ansible_os_family == "RedHat"
+- name: Install Apache Web Server for Debian
+  apt: pkg={{ apache_debian }} state=absent
+  when: ansible_os_family  == "Debian"

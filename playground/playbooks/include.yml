@@ -1,0 +1,8 @@
+--- # INCLUDE DEMO PLAYBOOK
+- hosts: rhel
+  become: yes
+  gather_facts: no
+  tasks:
+    - include: plays/pkgs.yml
+    - name: Verify if packages are installed
+      shell: yum list installed | grep 'telnet' > /tmp/pkgs.log

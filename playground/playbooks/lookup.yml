@@ -1,0 +1,7 @@
+--- # Lookup example playbook
+- hosts : all
+  user: ec2-user
+  gather_facts : no
+  tasks:
+    - debug: msg="The home directory is {{ lookup('env','HOME') }}"
+    - debug: msg="The look for Li is {{ lookup('csvfile', 'Li file=lookup.csv delimiter=, col=1 default=NOMATCH') }}"

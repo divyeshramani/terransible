@@ -1,0 +1,7 @@
+- name: Install tableau server rpm package
+  yum: 
+    name: https://downloads.tableau.com/esdalt/10.5.13/tableau-server-{{ tableau_version }}.x86_64.rpm
+    state: present
+
+
+

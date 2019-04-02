@@ -1,0 +1,5 @@
+- hosts: app
+  become: true
+  tasks:
+  - name: Install Lynx on app server
+    yum: pkg=lynx state=installed update_cache=true
